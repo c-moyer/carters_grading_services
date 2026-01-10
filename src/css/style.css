@@ -165,8 +165,9 @@ body {
   bottom: -4px; /* Align with the border */
   left: 0;
   width: 150px;
-  animation: drive 20s infinite;
+  animation: skidSteerDrive 15s linear infinite;
   z-index: 10;
+  will-change: transform;
 }
 
 .skid-steer-anim img {
@@ -174,48 +175,80 @@ body {
   height: auto;
 }
 
-@keyframes drive {
-  /* Drive forward at constant speed (~5mph) */
-  /* Drive forward at constant speed (~10mph) */
+.hero-text-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  z-index: 11;
+  animation: buttonSlide 15s linear infinite;
+  white-space: nowrap;
+  will-change: transform, opacity;
+
+  /* Custom Styling */
+  background: #22c55e; /* Bright Green */
+  color: #ffffff;
+  border: 3px solid #ffffff;
+  border-radius: 50px;
+  padding: 1rem 0;
+  width: 280px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+@keyframes skidSteerDrive {
   0% {
-    transform: translateX(-200px);
+    transform: translateX(-420px); /* 30px Overlap start */
+    animation-timing-function: ease-out;
+  }
+  20% {
+    transform: translateX(calc(50vw - 260px)); /* 30px Overlap end */
     animation-timing-function: linear;
   }
-  17% {
-    transform: translateX(58vw);
-    animation-timing-function: ease-out; /* Slight deceleration */
+  25% {
+    transform: translateX(calc(50vw - 260px));
+    animation-timing-function: ease-in-out;
   }
-  19% {
-    transform: translateX(60vw); /* Almost sudden stop */
+  30% {
+    transform: translateX(calc(50vw - 390px)); /* Backup */
     animation-timing-function: linear;
   }
-
-  /* Stop briefly */
-  23% {
-    transform: translateX(60vw);
-    animation-timing-function: ease-in-out; /* Smooth backup start */
+  35% {
+    transform: translateX(calc(50vw - 390px));
+    animation-timing-function: ease-in;
   }
-
-  /* Backup 10 feet (~300px) */
-  29% {
-    transform: translateX(calc(60vw - 300px));
-    animation-timing-function: linear;
-  }
-
-  /* Stop briefly */
-  33% {
-    transform: translateX(calc(60vw - 300px));
-    animation-timing-function: ease-in; /* Accelerate forward */
-  }
-
-  /* Drive away quickly */
-  56% {
+  45% {
     transform: translateX(110vw);
   }
-
-  /* Stay off screen until loop restarts */
   100% {
     transform: translateX(110vw);
+  }
+}
+
+@keyframes buttonSlide {
+  0% {
+    transform: translateX(-300px); /* Fixed start position for sync */
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  20% {
+    transform: translateX(calc(50vw - 50%)); /* Center the button */
+    opacity: 1;
+  }
+  90% {
+    transform: translateX(calc(50vw - 50%));
+    opacity: 1;
+  }
+  95% {
+    transform: translateX(calc(50vw - 50%));
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-300px);
+    opacity: 0;
   }
 }.hero .container {
   max-width: 800px;
