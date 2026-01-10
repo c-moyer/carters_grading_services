@@ -1,0 +1,49 @@
+<header class="header">
+  <div class="container">
+    <div class="header-content">
+      <a href="/" class="logo">
+        <img src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/464x464/filters:strip_exif()/filters:no_upscale()/filters:format(webp)/media/2a268f0b-9d64-4397-bbab-779f27368500.png" alt="Carter's Grading Services">
+      </a>
+
+      <nav class="nav">
+        <a href="/">Home</a>
+        <a href="/services">Services</a>
+        <a href="/gallery">Gallery</a>
+        <a href="/reviews">Reviews</a>
+        <a href="/contact">Contact</a>
+      </nav>
+
+      <div class="header-cta">
+        <a href="tel:8652376540" class="btn btn-primary">Call Us</a>
+        <a href="/contact" class="btn btn-secondary">Get a Free Quote</a>
+      </div>
+
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const nav = document.querySelector('.nav');
+
+    toggle.addEventListener('click', function() {
+      toggle.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+
+    // Close menu when clicking a link
+    const navLinks = nav.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        toggle.classList.remove('active');
+        nav.classList.remove('active');
+      });
+    });
+  });
+</script>
