@@ -165,7 +165,7 @@ body {
   bottom: -4px; /* Align with the border */
   left: 0;
   width: 150px;
-  animation: skidSteerDrive 15s linear infinite;
+  animation: skidSteerDrive 15s linear forwards;
   z-index: 10;
   will-change: transform;
 }
@@ -180,7 +180,7 @@ body {
   bottom: 20px;
   left: 0;
   z-index: 11;
-  animation: buttonSlide 15s linear infinite;
+  animation: buttonSlide 15s linear forwards;
   white-space: nowrap;
   will-change: transform, opacity;
 
@@ -197,6 +197,10 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+.hero-text-btn .mobile-text {
+  display: none;
 }
 
 @keyframes skidSteerDrive {
@@ -238,27 +242,25 @@ body {
     transform: translateX(calc(50vw - 50%)); /* Center the button */
     opacity: 1;
   }
-  90% {
+  100% {
     transform: translateX(calc(50vw - 50%));
     opacity: 1;
   }
-  95% {
-    transform: translateX(calc(50vw - 50%));
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(-300px);
-    opacity: 0;
-  }
-}.hero .container {
+}
+
+.hero .container {
   max-width: 800px;
   margin: 0 auto;
 }
 
 .hero h1 {
-  font-size: 3.5rem;
+  font-family: 'Saira Stencil One', sans-serif;
+  font-size: 4rem;
+  line-height: 1.1;
   margin-bottom: 1.5rem;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .hero-subtitle {
@@ -892,5 +894,64 @@ section h2 {
 
   .page-header h1 {
     font-size: 2rem;
+  }
+}
+@media (max-width: 768px) {
+  .hero-text-btn {
+    width: 160px; /* Smaller fixed width for mobile */
+    padding: 0.8rem 0;
+  }
+
+  .hero-text-btn .desktop-text {
+    display: none;
+  }
+
+  .hero-text-btn .mobile-text {
+    display: inline;
+  }
+
+  /*
+   * Mobile Geometry:
+   * Button Width: 160px
+   * Skid Steer Width: 150px
+   * Sync Gap Reduction: 30px (Overlap)
+   *
+   * Button Start: -300px (Offscreen)
+   * Skid Steer Start: -420px (30px into left of button - identical to desktop relative)
+   *
+   * Button End: Center (50vw)
+   * Button Left Edge at End: 50vw - 80px
+   * Skid Steer Right Edge Requirement: 50vw - 80px + 30px overlap = 50vw - 50px
+   * Skid Steer Left Edge Target: (50vw - 50px) - 150px = 50vw - 200px
+   *
+   * Backup Distance: Same relative shift as desktop
+   */
+  @keyframes skidSteerDrive {
+    0% {
+      transform: translateX(-420px);
+      animation-timing-function: ease-out;
+    }
+    20% {
+      transform: translateX(calc(50vw - 200px));
+      animation-timing-function: linear;
+    }
+    25% {
+      transform: translateX(calc(50vw - 200px));
+      animation-timing-function: ease-in-out;
+    }
+    30% {
+      transform: translateX(calc(50vw - 330px)); /* Backup */
+      animation-timing-function: linear;
+    }
+    35% {
+      transform: translateX(calc(50vw - 330px));
+      animation-timing-function: ease-in;
+    }
+    45% {
+      transform: translateX(110vw);
+    }
+    100% {
+      transform: translateX(110vw);
+    }
   }
 }
